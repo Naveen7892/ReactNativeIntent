@@ -1,6 +1,22 @@
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
+ * 
+ * Resources:
+ * 
+ * Button:
+ * https://facebook.github.io/react-native/docs/button.html
+ * 
+ * Calling function:
+ * https://reactnativecode.com/add-onpress-to-button/
+ * https://reactnativecode.com/creating-calling-function-android-ios-tutorial/
+ * 
+ * AJAX calls:
+ * https://facebook.github.io/react-native/docs/network.html
+ * 
+ * Dummy API calls:
+ * https://jsonplaceholder.typicode.com/
+ * 
  * @flow
  */
 
@@ -11,7 +27,8 @@ import {
   Text,
   View,
   TextInput,
-  Button
+  Button,
+  Alert
 } from 'react-native';
 
 const instructions = Platform.select({
@@ -27,6 +44,34 @@ export default class App extends Component<{}> {
     super(props);
     // this.state = { text: 'Useless Placeholder' };
     this.state = { text: '' };
+  }
+
+  getIntent() {
+
+    // fetch('https://jsonplaceholder.typicode.com/posts', {
+    //   method: 'GET',
+    //   headers: {
+    //     Accept: 'application/json',
+    //     'Content-Type': 'application/json',
+    //   }
+    //   // body: JSON.stringify({
+    //   //   firstParam: 'yourValue',
+    //   //   secondParam: 'yourOtherValue',
+    //   // }),
+    // });
+
+    return fetch('https://jsonplaceholder.typicode.com/posts', {
+      method: 'GET'
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      Alert.alert(JSON.stringify(responseJson));
+      return responseJson;
+    })
+    .catch((error) => {
+      Alert.alert(JSON.stringify(error));
+      console.error(error);
+    });
   }
 
   render() {
@@ -49,7 +94,8 @@ export default class App extends Component<{}> {
         <Button
           title="Intent"
           style={{alignItems: 'left'}}
-          onPress={(text) => this.setState({text: this.state.text.toUpperCase() }) }
+          // onPress={(text) => this.setState({text: this.state.text.toUpperCase() }) }
+          onPress={ this.getIntent }
         >
         </Button>
 
