@@ -9,7 +9,9 @@ import {
   Platform,
   StyleSheet,
   Text,
-  View
+  View,
+  TextInput,
+  Button
 } from 'react-native';
 
 const instructions = Platform.select({
@@ -20,18 +22,37 @@ const instructions = Platform.select({
 });
 
 export default class App extends Component<{}> {
+
+  constructor(props) {
+    super(props);
+    // this.state = { text: 'Useless Placeholder' };
+    this.state = { text: '' };
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-          Welcome to React Native!
+          Find the Intent
         </Text>
-        <Text style={styles.instructions}>
-          To get started, edit App.js
+        <TextInput
+          style={{height: 40, width: 200, borderColor: 'gray', borderWidth: 1, }}
+          onChangeText={(text) => this.setState({text})}
+          autoCorrect={false}
+          underlineColorAndroid='rgba(0,0,0,0)'
+          value={this.state.text}
+        />
+        <Text>
+          {this.state.text.length > 0? 'Your text: ': ''} {this.state.text}
         </Text>
-        <Text style={styles.instructions}>
-          {instructions}
-        </Text>
+
+        <Button
+          title="Intent"
+          style={{alignItems: 'left'}}
+          onPress={(text) => this.setState({text: this.state.text.toUpperCase() }) }
+        >
+        </Button>
+
       </View>
     );
   }
@@ -40,7 +61,7 @@ export default class App extends Component<{}> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
