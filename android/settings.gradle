@@ -1,0 +1,3 @@
+rootProject.name = 'ReactNativeIntent'
+
+include ':app'
