@@ -47,7 +47,9 @@ export default class App extends Component<{}> {
     // this.onChange = this.onChange.bind(this);
 
     // this.state = { text: 'Useless Placeholder' };
-    this.state = { text: '' };
+    this.state = { 
+      text: ''
+    };
   }
 
   getIntent() {
@@ -85,6 +87,17 @@ export default class App extends Component<{}> {
     });
   }
 
+  _onChangeText() {
+    // Alert.alert("change");
+    this.clearIntent();
+  }
+
+  clearIntent() {
+    // Alert.alert("clear");
+    this.setState({
+      intent: ""
+    })
+  }
   // componentDidMount() {
   //   fetch('https://jsonplaceholder.typicode.com/posts', {
   //     method: 'GET'
@@ -113,7 +126,13 @@ export default class App extends Component<{}> {
 
         <TextInput
           style={{height: 40, width: 200, borderColor: 'gray', borderWidth: 1, }}
-          onChangeText={(text) => this.setState({text})}
+          // onChangeText={(text) => this.setState({text})}
+          onChangeText={(text) => this.setState({
+            text
+          }, () => {
+            this._onChangeText();
+          })
+          } 
           autoCorrect={false}
           underlineColorAndroid='rgba(0,0,0,0)'
           value={this.state.text}
