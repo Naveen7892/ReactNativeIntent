@@ -28,7 +28,8 @@ import {
   View,
   TextInput,
   Button,
-  Alert
+  Alert,
+  Keyboard
 } from 'react-native';
 
 const instructions = Platform.select({
@@ -42,12 +43,14 @@ export default class App extends Component<{}> {
 
   constructor(props) {
     super(props);
+
+    // this.onChange = this.onChange.bind(this);
+
     // this.state = { text: 'Useless Placeholder' };
     this.state = { text: '' };
   }
 
   getIntent() {
-
     // fetch('https://jsonplaceholder.typicode.com/posts', {
     //   method: 'GET',
     //   headers: {
@@ -60,26 +63,54 @@ export default class App extends Component<{}> {
     //   // }),
     // });
 
-    return fetch('https://jsonplaceholder.typicode.com/posts', {
+    Keyboard.dismiss();
+
+    // return fetch('https://jsonplaceholder.typicode.com/posts', {
+    fetch('https://jsonplaceholder.typicode.com/posts', {
       method: 'GET'
     })
     .then((response) => response.json())
     .then((responseJson) => {
-      Alert.alert(JSON.stringify(responseJson));
-      return responseJson;
+      // Alert.alert(JSON.stringify(responseJson));
+      this.setState({
+        intentResponse: JSON.stringify(responseJson),
+        // intent: "INTENT: " + this.state.text.toUpperCase()
+        intent: "Query"
+      });
+      // return responseJson;
     })
     .catch((error) => {
-      Alert.alert(JSON.stringify(error));
+      // Alert.alert(JSON.stringify(error));
       console.error(error);
     });
   }
 
+  // componentDidMount() {
+  //   fetch('https://jsonplaceholder.typicode.com/posts', {
+  //     method: 'GET'
+  //   })
+  //   .then((response) => response.json())
+  //   .then((responseJson) => {
+  //     Alert.alert(JSON.stringify(responseJson));
+  //     this.setState({
+  //       text: "Hi"
+  //     });
+  //   })
+  //   .catch((error) => {
+  //     Alert.alert(JSON.stringify(error));
+  //     console.error(error);
+  //   });
+  // }
+
   render() {
     return (
+      
       <View style={styles.container}>
+
         <Text style={styles.welcome}>
           Find the Intent
         </Text>
+
         <TextInput
           style={{height: 40, width: 200, borderColor: 'gray', borderWidth: 1, }}
           onChangeText={(text) => this.setState({text})}
@@ -87,18 +118,38 @@ export default class App extends Component<{}> {
           underlineColorAndroid='rgba(0,0,0,0)'
           value={this.state.text}
         />
+
         <Text>
           {this.state.text.length > 0? 'Your text: ': ''} {this.state.text}
         </Text>
 
+        <Text style={{padding: 10}}>
+        </Text>
+
         <Button
           title="Intent"
-          style={{alignItems: 'left'}}
+          style={styles.button}
           // onPress={(text) => this.setState({text: this.state.text.toUpperCase() }) }
-          onPress={ this.getIntent }
+          onPress={ this.getIntent.bind(this)  }
         >
         </Button>
+         
+        <Text style={{padding: 10}}>
+        </Text>
 
+        <Text>
+          {this.state.intent}
+        </Text>
+
+        {/* <Text style={{padding: 10}}>
+        </Text>
+
+        <Text style={{ justifyContent: "center"}}>[TESTING] Response from API call: {"\n"} </Text>
+
+        <Text>
+          {this.state.intentResponse}
+        </Text> */}
+        
       </View>
     );
   }
@@ -120,5 +171,20 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#333333',
     marginBottom: 5,
+  },
+  buttonContainer: {
+    height: 60,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1
+    // backgroundColor: 'red'
+  },
+  button: {
+    flex: 1,
+    padding: 8,
+    backgroundColor: 'steelblue',
+    alignSelf: 'stretch',
+    justifyContent: 'center',
   },
 });
