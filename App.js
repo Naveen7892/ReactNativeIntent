@@ -68,16 +68,42 @@ export default class App extends Component<{}> {
     Keyboard.dismiss();
 
     // return fetch('https://jsonplaceholder.typicode.com/posts', {
-    fetch('https://jsonplaceholder.typicode.com/posts', {
-      method: 'GET'
+    // fetch('https://jsonplaceholder.typicode.com/posts', {
+    //   method: 'GET'
+    // })
+    // .then((response) => response.json())
+    // .then((responseJson) => {
+    //   // Alert.alert(JSON.stringify(responseJson));
+    //   this.setState({
+    //     intentResponse: JSON.stringify(responseJson),
+    //     // intent: "INTENT: " + this.state.text.toUpperCase()
+    //     intent: "Query"
+    //   });
+    //   // return responseJson;
+    // })
+    // .catch((error) => {
+    //   // Alert.alert(JSON.stringify(error));
+    //   console.error(error);
+    // });
+
+    fetch('https://api.abash76.hasura-app.io/get-news', {
+      method: 'POST',
+      headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            // getNews: 'Whats happening in bollywood'
+            getNews: this.state.text
+          }),
     })
     .then((response) => response.json())
     .then((responseJson) => {
-      // Alert.alert(JSON.stringify(responseJson));
+      Alert.alert(JSON.stringify(responseJson.data.intent[0].value));
       this.setState({
         intentResponse: JSON.stringify(responseJson),
         // intent: "INTENT: " + this.state.text.toUpperCase()
-        intent: "Query"
+        intent: responseJson.data.intent[0].value
       });
       // return responseJson;
     })
@@ -85,6 +111,7 @@ export default class App extends Component<{}> {
       // Alert.alert(JSON.stringify(error));
       console.error(error);
     });
+
   }
 
   _onChangeText() {
