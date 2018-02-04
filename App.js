@@ -86,10 +86,16 @@ export default class App extends Component<{}> {
     //   console.error(error);
     // });
 
+    this.setState({
+      intentResponse: "",
+      // intent: "INTENT: " + this.state.text.toUpperCase()
+      intent: "Loading..."
+    });
+
     fetch('https://api.abash76.hasura-app.io/get-news', {
       method: 'POST',
       headers: {
-            Accept: 'application/json',
+            'Accept': 'application/json',
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
@@ -97,19 +103,40 @@ export default class App extends Component<{}> {
             getNews: this.state.text
           }),
     })
-    .then((response) => response.json())
+    .then((response) => response.json() )
     .then((responseJson) => {
-      Alert.alert(JSON.stringify(responseJson.data.intent[0].value));
-      this.setState({
-        intentResponse: JSON.stringify(responseJson),
-        // intent: "INTENT: " + this.state.text.toUpperCase()
-        intent: responseJson.data.intent[0].value
-      });
+
+      // Handle error
+      // if(typeof response === 'string') {
+      //   // Alert.alert("Error");
+      //   this.setState({
+      //     intentResponse: "",
+      //     // intent: "INTENT: " + this.state.text.toUpperCase()
+      //     intent: "Intent not found!"
+      //   });
+      //   // return;
+      // } else {
+
+        // Alert.alert(response);
+        // var responseJson = JSON.parse(response);
+        // Alert.alert(responseJson);
+        this.setState({
+          intentResponse: JSON.stringify(responseJson),
+          // intent: "INTENT: " + this.state.text.toUpperCase()
+          intent: responseJson.data.intent[0].value
+        });
+      // }
       // return responseJson;
     })
     .catch((error) => {
       // Alert.alert(JSON.stringify(error));
-      console.error(error);
+      // console.error(error);
+
+      this.setState({
+        intentResponse: JSON.stringify(error),
+        // intent: "INTENT: " + this.state.text.toUpperCase()
+        intent: "Intent not found!"
+      });
     });
 
   }
@@ -177,6 +204,7 @@ export default class App extends Component<{}> {
           style={styles.button}
           // onPress={(text) => this.setState({text: this.state.text.toUpperCase() }) }
           onPress={ this.getIntent.bind(this)  }
+          disabled = {this.state.text.length === 0}
         >
         </Button>
          
