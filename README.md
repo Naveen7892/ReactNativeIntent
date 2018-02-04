@@ -53,4 +53,29 @@ Packages: (wanted => installed)
 
 ```
 
+**Server API Used:**
+```Server API
+URL: https://api.abash76.hasura-app.io/get-news
+METHOD: POST
+HEADERS: 
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+BODY:
+    'getNews': '...Search text...'
+
+Environment:
+  OS: Windows 8.1
+  Node: 6.9.5
+  Yarn: 1.3.2
+  npm: 4.6.1
+  Watchman: Not Found
+  Xcode: N/A
+  Android Studio: Version  3.0.0.0 AI-171.4443003
+
+Packages: (wanted => installed)
+  react: 16.2.0 => 16.2.0
+  react-native: 0.52.2 => 0.52.2
+
+```
+
 ******************************************************************************************************

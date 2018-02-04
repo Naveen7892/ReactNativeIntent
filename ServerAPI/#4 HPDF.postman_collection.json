@@ -1,0 +1,80 @@
+{
+	"info": {
+		"name": "#4 HPDF",
+		"_postman_id": "53e70296-6d26-7d35-d242-77715f177688",
+		"description": "Hasura Internship.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "https://api.byproduct48.hasura-app.io/get_articles",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Hasura-User-Id",
+						"value": "0"
+					},
+					{
+						"key": "X-Hasura-Role",
+						"value": "anonymous"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"type\": \"select\",\n  \"args\": {\n    \"table\": \"article\",\n    \"columns\": [\n      \"*\"\n    ]\n  }\n}"
+				},
+				"url": {
+					"raw": "https://api.byproduct48.hasura-app.io/get_articles",
+					"protocol": "https",
+					"host": [
+						"api",
+						"byproduct48",
+						"hasura-app",
+						"io"
+					],
+					"path": [
+						"get_articles"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "https://api.abash76.hasura-app.io/get-news",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"getNews\": \"ipl auctions\"\n}"
+				},
+				"url": {
+					"raw": "https://api.abash76.hasura-app.io/get-news",
+					"protocol": "https",
+					"host": [
+						"api",
+						"abash76",
+						"hasura-app",
+						"io"
+					],
+					"path": [
+						"get-news"
+					]
+				},
+				"description": "API for subgroup task 2 - news app"
+			},
+			"response": []
+		}
+	]
+}
